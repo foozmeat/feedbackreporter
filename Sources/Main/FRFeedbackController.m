@@ -326,7 +326,12 @@
         return;
     }
 
-    NSURL *url = [NSURL URLWithString:target];
+    NSURL *url = [NSURL URLWithString:[target stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+
+  if (url == nil) {
+    NSLog(@"URL can't be nil");
+    return;
+  }
 
     SCNetworkConnectionFlags reachabilityFlags = 0;
 
