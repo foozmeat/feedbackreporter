@@ -667,6 +667,7 @@
     [NSThread detachNewThreadSelector:@selector(populate) toTarget:self withObject:nil];
 
     [super showWindow:sender];
+	[super.window makeKeyAndOrderFront:sender];
 }
 
 - (BOOL) isShown

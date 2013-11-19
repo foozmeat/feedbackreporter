@@ -81,6 +81,7 @@
     @synchronized (controller) {
     
         if ([controller isShown]) {
+					[controller.window makeKeyAndOrderFront:controller];
             NSLog(@"Controller already shown");
             return NO;
         }
@@ -129,6 +130,7 @@
         @synchronized (controller) {
         
             if ([controller isShown]) {
+							[controller showWindow:self];
                 NSLog(@"Controller already shown");
                 return NO;
             }
@@ -171,6 +173,7 @@
     @synchronized (controller) {
 
         if ([controller isShown]) {
+					[controller showWindow:self];
             NSLog(@"Controller already shown");
             return NO;
         }
