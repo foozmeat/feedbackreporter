@@ -16,6 +16,10 @@
 
 #import "FRCrashLogFinder.h"
 #import "FRApplication.h"
+#include <unistd.h>
+#include <sys/types.h>
+#include <pwd.h>
+#include <assert.h>
 
 @implementation FRCrashLogFinder
 
@@ -46,11 +50,19 @@
 
 + (NSArray*) findCrashLogsSince:(NSDate*)date
 {
-    NSMutableArray *files = [NSMutableArray array];
+  NSMutableArray *files = [NSMutableArray array];
 
-    NSFileManager *fileManager = [NSFileManager defaultManager];
+  NSFileManager *fileManager = [NSFileManager defaultManager];
 
-    NSArray *libraryDirectories = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSLocalDomainMask|NSUserDomainMask, NO);
+  const char *home = getpwuid(getuid())->pw_dir;
+  NSString *path = [[NSFileManager defaultManager]
+                    stringWithFileSystemRepresentation:home
+                    length:strlen(home)];
+  NSURL *url = [NSURL fileURLWithPath:path isDirectory:YES];
+  NSString *realLibraryDirectory = [url.path stringByAppendingPathComponent:@"Library"];
+
+  NSArray *libraryDirectories = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSLocalDomainMask|NSUserDomainMask, NO);
+  libraryDirectories = [libraryDirectories arrayByAddingObject:realLibraryDirectory];
 
     NSUInteger i = [libraryDirectories count];
     while(i--) {
@@ -62,7 +74,7 @@
         NSString* logDir2 = @"Logs/DiagnosticReports/";
         logDir2 = [[libraryDirectory stringByAppendingPathComponent:logDir2] stringByExpandingTildeInPath];
 
-        // NSLog(@"Searching for crash files at %@", logDir2);
+//        NSLog(@"Searching for crash files at %@", logDir2);
 
         // Older versions of Mac OS X used Logs/CrashReporter instead
         if (![fileManager fileExistsAtPath:logDir2]) {
