@@ -620,6 +620,7 @@
 				INFOPLIST_FILE = Sources/Main/Info.plist;
 				INSTALL_PATH = "@loader_path/../Frameworks";
 				PRODUCT_NAME = FeedbackReporter;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = ReleaseMacAppStore;
@@ -657,6 +658,7 @@
 				INFOPLIST_FILE = Sources/Main/Info.plist;
 				INSTALL_PATH = "@loader_path/../Frameworks";
 				PRODUCT_NAME = FeedbackReporter;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
@@ -670,6 +672,7 @@
 				INFOPLIST_FILE = Sources/Main/Info.plist;
 				INSTALL_PATH = "@loader_path/../Frameworks";
 				PRODUCT_NAME = FeedbackReporter;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
